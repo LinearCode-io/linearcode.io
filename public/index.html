@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LinearCode — Your local data engine</title>
+  <meta name="description"
+    content="Coco is a local data engine. It indexes every file, screenshot and password you own, keeps them in an encrypted vault on your own machines, and makes all of it searchable across every device you use. Nothing is uploaded.">
+
+  <meta property="og:title" content="LinearCode — Your local data engine">
+  <meta property="og:description"
+    content="Every file, screenshot and password you own — encrypted on your machines, searchable across every device, in about 20 milliseconds. Nothing leaves.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://linearcode.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#1c1c1e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="/">
+        <span class="brand-tile"><img src="/logo.svg" alt=""></span>
+        <span><span class="brand-name">LinearCode</span><span class="brand-sub hide-sm">/ Coco</span></span>
+      </a>
+      <nav class="topnav">
+        <a href="/research.html">Research</a>
+        <a href="https://github.com/linearcode" rel="noopener">GitHub</a>
+        <a href="#hiring">Hiring</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+            stroke-width="1.6" stroke-linecap="round">
+            <circle cx="10" cy="10" r="3.6" />
+            <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M15.7 4.3l-1.4 1.4M5.7 14.3l-1.4 1.4" />
+          </svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16.5 12.3A7 7 0 0 1 7.7 3.5a7 7 0 1 0 8.8 8.8Z" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ─────────────────────────── hero ─────────────────────────── -->
+    <div class="shell hero">
+      <span class="eyebrow"><span class="dot"></span>Runs on your machine</span>
+      <h1>Your <span class="accent">local data engine</span>.</h1>
+      <p class="hero-sub">
+        Coco indexes every file, screenshot and password you own — reads them, OCRs them, embeds them —
+        and keeps the whole thing encrypted on hardware you control. One keystroke searches all of it,
+        on every device you own, in about twenty milliseconds. Nothing is uploaded. Nothing is sold.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#pillars">See what it does</a>
+        <a class="btn btn-ghost" href="/research.html">Read the research</a>
+        <span class="kbd">⌘K</span>
+        <span style="font-size:13px;color:var(--fg-dim)">works right here on this page</span>
+      </div>
+    </div>
+
+    <!-- ──────────────────── the demo (Coco Terminal) ──────────────────── -->
+    <div class="shell" id="demo">
+      <div class="window">
+        <div class="titlebar">
+          <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="titlebar-title">Coco — Content Engine</div>
+          <div style="width:44px"></div>
+        </div>
+
+        <div class="app-body">
+          <aside class="sidebar" aria-hidden="true">
+            <div class="sidebar-head">
+              <span class="sidebar-logo"><img src="/logo.svg" alt=""></span>
+              <div>
+                <h2>Coco</h2>
+                <p>Content Engine</p>
+              </div>
+            </div>
+
+            <div class="sidebar-nav">
+              <div class="new-chat">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round">
+                  <path d="M10 4v12M4 10h12" />
+                </svg>
+                <span>New chat</span>
+              </div>
+
+              <div class="sidebar-group">
+                <div class="sidebar-section-label">
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m7 5 5 5-5 5" />
+                  </svg>
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round">
+                    <path d="M16.5 11.5a2 2 0 0 1-2 2H7l-3.5 3v-3a2 2 0 0 1-1-2v-6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                  </svg>
+                  <span>Recent chats</span><span class="count">12</span>
+                </div>
+              </div>
+
+              <div class="sidebar-group bordered">
+                <div class="rail-label">Library</div>
+                <div class="rail-item is-active">
+                  <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="10" cy="10" r="7" />
+                    <path d="M3 10h14M10 3a11 11 0 0 1 0 14 11 11 0 0 1 0-14" />
+                  </svg>
+                  <span>All Devices</span><span class="badge">3</span>
+                </div>
+                <div class="rail-item">
+                  <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round">
+                    <rect x="2.5" y="4" width="15" height="9.5" rx="1.5" />
+                    <path d="M7 16.5h6" />
+                  </svg>
+                  <span>MacBook Pro</span>
+                </div>
+                <div class="rail-item">
+                  <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round">
+                    <rect x="5.5" y="2.5" width="9" height="15" rx="2" />
+                    <path d="M9 15h2" />
+                  </svg>
+                  <span>iPhone</span>
+                </div>
+                <div class="rail-item">
+                  <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round">
+                    <circle cx="7" cy="12" r="3.2" />
+                    <path d="m9.4 9.6 5.4-5.4M13 6l1.8 1.8M11.4 7.6l1.8 1.8" />
+                  </svg>
+                  <span>Vault</span><span class="badge">86</span>
+                </div>
+              </div>
+
+              <div class="sidebar-group bordered">
+                <div class="rail-item is-dim">
+                  <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="10" cy="10" r="2.6" />
+                    <path d="M10 2.6v1.6M10 15.8v1.6M17.4 10h-1.6M4.2 10H2.6M15.2 4.8l-1.1 1.1M5.9 14.1l-1.1 1.1M15.2 15.2l-1.1-1.1M5.9 5.9 4.8 4.8" />
+                  </svg>
+                  <span>Settings</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="pane">
+            <div class="pane-head">
+              <div>
+                <h3>Your Vault <span class="pill"><span class="dot"></span>100% local</span></h3>
+                <p>Everything you know — owned by you, stored on your own devices.</p>
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat">
+                <div class="k">Files</div>
+                <div class="v">12,910</div>
+                <div class="s">across 3 devices</div>
+              </div>
+              <div class="stat">
+                <div class="k">Vault records</div>
+                <div class="v">86</div>
+                <div class="s">passwords &amp; keys</div>
+              </div>
+              <div class="stat">
+                <div class="k">Index size</div>
+                <div class="v">2.7 MB</div>
+                <div class="s">for 1.19 GB managed</div>
+              </div>
+              <div class="stat">
+                <div class="k">Network calls</div>
+                <div class="v">0</div>
+                <div class="s">while indexing or searching</div>
+              </div>
+            </div>
+
+            <div class="index-strip">
+              <span class="live" aria-hidden="true"></span>
+              <span><b>12,481</b> of <b>12,910</b> files have searchable text</span>
+              <span style="color:var(--fg-dim)">· still indexing (429 to go)</span>
+            </div>
+
+            <div class="hint-row">
+              <span>Open search any time with <span class="kbd">⌘K</span></span>
+              <span>Private. Local. Ready when you are.</span>
+            </div>
+          </div>
+
+          <!-- omnibar overlay — the interactive part -->
+          <div class="omni-backdrop">
+            <div class="omni" role="combobox" aria-expanded="true" aria-haspopup="listbox" aria-label="Coco search demo">
+              <div class="omni-input-row">
+                <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round">
+                  <circle cx="8.8" cy="8.8" r="5.6" />
+                  <path d="m13.2 13.2 3.4 3.4" />
+                </svg>
+                <input class="omni-input" id="omniInput" type="text" readonly autocomplete="off" spellcheck="false"
+                  placeholder="Search everything you own…" aria-label="Search the demo corpus">
+                <span class="caret" id="omniCaret" aria-hidden="true"></span>
+              </div>
+              <div class="omni-meta">
+                <span id="omniCount">15 items indexed</span>
+                <span id="omniLatency">100% local</span>
+              </div>
+              <div class="omni-results" id="omniResults" role="listbox" aria-label="Search results"></div>
+            </div>
+          </div>
+
+          <div class="takeover-hint" id="takeoverHint">Click the search box — it's really yours to type in</div>
+        </div>
+      </div>
+      <p class="footnote">
+        A faithful replica of Coco Terminal running on a small sample corpus, entirely in your browser.
+        No query on this page reaches a server — which is the point.
+      </p>
+    </div>
+
+    <!-- ─────────────────────────── pillars ─────────────────────────── -->
+    <section id="pillars">
+      <div class="shell">
+        <div class="section-head">
+          <h2>One engine. Your hardware. Everything you own.</h2>
+          <p>
+            Coco is not a cloud drive with a search box bolted on. It is an indexing engine that lives on
+            your machine, understands your files, and never needs permission from anyone else to answer you.
+          </p>
+        </div>
+
+        <div class="pillars">
+          <article class="card">
+            <span class="card-icon">
+              <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="10" cy="5" rx="6.5" ry="2.6" />
+                <path d="M3.5 5v10c0 1.4 2.9 2.6 6.5 2.6s6.5-1.2 6.5-2.6V5M3.5 10c0 1.4 2.9 2.6 6.5 2.6s6.5-1.2 6.5-2.6" />
+              </svg>
+            </span>
+            <h3>A data engine, not a folder</h3>
+            <p>
+              Point it at a directory and it reads what's inside: text extraction, OCR on screenshots and
+              scans, transcripts from audio, embeddings for meaning. Hybrid keyword&nbsp;+&nbsp;vector
+              retrieval answers in milliseconds.
+            </p>
+            <ul>
+              <li>Works fully offline — no account, no server</li>
+              <li>Indexes in the background while you work</li>
+              <li>Tells you when it can't read something, instead of hiding it</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card-icon">
+              <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.5" y="8.5" width="13" height="8.5" rx="2.2" />
+                <path d="M6.6 8.5V6.2a3.4 3.4 0 0 1 6.8 0v2.3M10 12v2" />
+              </svg>
+            </span>
+            <h3>Your password vault, at home</h3>
+            <p>
+              Logins, keys and recovery codes live in the same encrypted vault as your files — on your
+              devices, under keys only you hold. No vendor to breach, no vault to subpoena, no plaintext
+              anywhere.
+            </p>
+            <ul>
+              <li>End-to-end encrypted; keys never leave your hardware</li>
+              <li>Secrets are searchable by what they're for, not just their name</li>
+              <li>Syncs to your other devices — and to nothing else</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="card-icon">
+              <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1.8" y="4" width="10" height="7.5" rx="1.6" />
+                <rect x="13" y="8.5" width="5.2" height="9" rx="1.6" />
+                <path d="M5 14.5h3.5" />
+              </svg>
+            </span>
+            <h3>Searchable across every device</h3>
+            <p>
+              Your laptop, your phone, your desktop — one portfolio. Search from any of them and get hits
+              from all of them, each labelled with the device it came from. Sync is peer-to-peer and
+              end-to-end encrypted; a lost device is ejected cryptographically.
+            </p>
+            <ul>
+              <li>Per-device attribution on every result</li>
+              <li>Peer-to-peer fleet sync — no relay holds your data</li>
+              <li>Revoke a device and its access is gone, not just hidden</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="proof">
+          <div class="proof-item">
+            <div class="v">~20 ms</div>
+            <div class="k">Hybrid FTS5&nbsp;+&nbsp;vector search, measured on a live personal corpus</div>
+          </div>
+          <div class="proof-item">
+            <div class="v">2.7 MB</div>
+            <div class="k">Index footprint for 1.19&nbsp;GB of managed content</div>
+          </div>
+          <div class="proof-item">
+            <div class="v">0</div>
+            <div class="k">Network calls during indexing or search — checkable with any packet monitor</div>
+          </div>
+          <div class="proof-item">
+            <div class="v">E2E</div>
+            <div class="k">Cross-device sync, verified iPhone&nbsp;↔&nbsp;Mac with cryptographic ejection</div>
+          </div>
+        </div>
+        <p class="footnote">
+          Engine figures come from our own instrumentation on a real corpus, not a benchmark rig.
+          Methodology and numbers are written up in <a href="/research.html" style="color:var(--fg-secondary)">Research</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── hiring ─────────────────────────── -->
+    <section id="hiring" style="padding-top:0">
+      <div class="shell">
+        <div class="contact">
+          <div>
+            <div class="section-head">
+              <h2>We're hiring the people who build the engine.</h2>
+              <p>
+                Small team, no growth theatre. If you write systems software — Rust, retrieval, on-device
+                models, applied cryptography, or the interfaces that make all of it feel like nothing —
+                tell us what you've built.
+              </p>
+            </div>
+            <p style="margin-top:18px;font-size:14px;color:var(--fg-secondary)">
+              Not looking for a job? The same form reaches us for partnerships, press, and anything else.
+              Or write directly to
+              <a class="mono" href="mailto:lc@linearcode.io" style="color:var(--fg-primary)">lc@linearcode.io</a>.
+            </p>
+          </div>
+
+          <form id="contactForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="role">I'm writing about</label>
+              <select id="role" name="role">
+                <option>Engineering — systems / Rust</option>
+                <option>Engineering — retrieval &amp; models</option>
+                <option>Engineering — client &amp; interface</option>
+                <option>Security &amp; cryptography</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">What you've built</label>
+              <textarea id="message" name="message" placeholder="A paragraph and a link is plenty."></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">
+              Send to lc@linearcode.io
+            </button>
+            <p class="form-note">
+              Opens your mail client with the message ready — nothing is posted to a server, and this page
+              stores nothing.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <span>© 2026 LinearCode · Private. Local. Ready when you are.</span>
+      <nav class="footer-links">
+        <a href="/research.html">Research</a>
+        <a href="https://github.com/linearcode" rel="noopener">GitHub</a>
+        <a href="#hiring">Hiring</a>
+        <a href="mailto:lc@linearcode.io">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/demo.js"></script>
+</body>
+
+</html>
