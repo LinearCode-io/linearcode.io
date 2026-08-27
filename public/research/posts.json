@@ -1,0 +1,21 @@
+[
+  {
+    "slug": "progressive-language-models",
+    "file": "2026-06-30-progressive-language-models.md",
+    "title": "Progressive Language Models: Can LLMs Reuse a Shared Knowledge Layer Across Versions?",
+    "description": "A practical review of reusable knowledge modules, continual pretraining, and what is still missing for cross-version LLM reuse.",
+    "date": "2026-06-30",
+    "dateShort": "Jun 2026",
+    "tags": [
+      "llm",
+      "continual-learning",
+      "moe",
+      "jepa",
+      "modular-ai"
+    ],
+    "categories": [
+      "research",
+      "llm-architecture"
+    ]
+  }
+]
