@@ -48,6 +48,7 @@ reference copy to keep in sync by hand.
 | `public/demo.js` | omnibar demo, theme toggle, contact form |
 | `public/styles.css` | design tokens mirroring Coco Terminal, light/dark/system |
 | `scripts/build-index.py` | regenerates the derived files |
+| `scripts/build-og.sh` | re-renders `public/og-image.png` from `og-card.html` |
 
 Each file's header comment explains its own constraints and the tradeoffs
 behind them — including why articles render client-side and what that costs.
