@@ -33,10 +33,20 @@ edit those by hand. `deploy.sh` runs it for you.
 ./deploy.sh
 ```
 
-Rsyncs `public/` to the web root and reloads nginx. `LC_SERVER`,
-`LC_SERVER_USER` and `LC_WEBSITE_DIR` override the target. TLS is managed by
-Certbot on the server and is never overwritten; `nginx/linearcode.conf` is a
-reference copy to keep in sync by hand.
+Rsyncs `public/` to the web root, reloads nginx, then curls `/`,
+`/research/` and `/sitemap.xml` and fails if any is not 200 — rsync exiting 0
+only means files copied. `LC_SERVER`, `LC_SERVER_USER`, `LC_WEBSITE_DIR` and
+`LC_SITE_URL` override the target.
+
+Server-side config is **not** deployed by this script. TLS is managed by
+Certbot on the box, and `nginx/` holds reference copies only:
+
+- `nginx/linearcode.conf` — the vhost. Currently **not identical** to the
+  server's; check with `ssh <host> "sudo cat /etc/nginx/conf.d/linearcode.conf"`
+  and `nginx -T` to see the fully resolved config.
+- `nginx/renewal-hooks/reload-nginx.sh` — install once at
+  `/etc/letsencrypt/renewal-hooks/deploy/`. Without it a renewed certificate
+  sits on disk while nginx keeps serving the expired one.
 
 ## Layout
 

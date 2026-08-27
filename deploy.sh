@@ -18,6 +18,7 @@ set -euo pipefail
 SERVER="${LC_SERVER:-pns}"          # ssh alias; ~/.ssh/config maps it to the host
 SERVER_USER="${LC_SERVER_USER:-ec2-user}"
 WEBSITE_DIR="${LC_WEBSITE_DIR:-/var/www/linearcode}"
+SITE_URL="${LC_SITE_URL:-https://linearcode.io}"
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 PUBLIC_DIR="$ROOT/public"
@@ -69,7 +70,7 @@ if [ "$DRY_RUN" = true ]; then
   exit 0
 fi
 
-ssh "$SERVER" "sudo mkdir -p '$WEBSITE_DIR' && sudo chown '$SERVER_USER':'$SERVER_USER' '$WEBSITE_DIR'"
+ssh -n "$SERVER" "sudo mkdir -p '$WEBSITE_DIR' && sudo chown '$SERVER_USER':'$SERVER_USER' '$WEBSITE_DIR'"
 # --delete keeps the server an exact mirror, so a file removed here disappears
 # there instead of lingering as a dead route. --delay-updates moves the new
 # files into place at the end, which keeps the window where a visitor could
@@ -82,9 +83,37 @@ echo ""
 echo -e "${YELLOW}Step 4: reloading nginx…${NC}"
 # Nginx config is managed by certbot on the server and is deliberately not
 # overwritten from here. nginx/linearcode.conf is the reference copy.
-ssh "$SERVER" "sudo nginx -t && sudo systemctl reload nginx"
+ssh -n "$SERVER" "sudo nginx -t && sudo systemctl reload nginx"
 echo -e "${GREEN}✓ nginx reloaded${NC}"
 
 echo ""
+
+echo -e "${YELLOW}Step 5: checking the live site…${NC}"
+# rsync exiting 0 only means files copied. Without this the script prints
+# "Deployed" over a site returning 500 — which is one dead nginx away from
+# true at any time. Resolved straight to the host we just deployed to, so a
+# stale DNS cache on the operator's laptop cannot fake a failure.
+SITE_HOST="$(printf '%s' "$SITE_URL" | sed -e 's|^https\{0,1\}://||' -e 's|/.*$||')"
+SERVER_IP="$(ssh -G "$SERVER" </dev/null 2>/dev/null | awk '/^hostname /{print $2; exit}')"
+FAILED=0
+for path in / /research/ /sitemap.xml; do
+  code="$(curl -s -o /dev/null -m 15 \
+    --resolve "$SITE_HOST:443:$SERVER_IP" \
+    -w '%{http_code}' "$SITE_URL$path" || echo 000)"
+  if [ "$code" = "200" ]; then
+    echo -e "  ${GREEN}✓${NC} $path"
+  else
+    echo -e "  ${RED}✗${NC} $path → $code"
+    FAILED=1
+  fi
+done
+
+if [ "$FAILED" != 0 ]; then
+  echo -e "${RED}Files synced, but the site is not healthy.${NC}"
+  echo "  ssh $SERVER 'sudo nginx -t && sudo systemctl status nginx --no-pager | head -5'"
+  exit 1
+fi
+
+echo ""
 echo -e "${GREEN}=== Deployed ===${NC}"
-echo "https://linearcode.io"
+echo "$SITE_URL"
