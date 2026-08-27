@@ -41,30 +41,6 @@
     });
   }
 
-  /* ── contact form → mailto ─────────────────────────────────────────── */
-
-  var form = document.getElementById("contactForm");
-  if (form) {
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      var get = function (id) {
-        var el = document.getElementById(id);
-        return el ? el.value.trim() : "";
-      };
-      var subject = "[" + (get("role") || "Hello") + "] " + (get("name") || "Introduction");
-      var body =
-        "Name: " + get("name") + "\n" +
-        "Email: " + get("email") + "\n" +
-        "Interested in: " + get("role") + "\n\n" +
-        get("message") + "\n";
-      window.location.href =
-        "mailto:lc@linearcode.io?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(body);
-    });
-  }
-
   /* ── demo corpus ───────────────────────────────────────────────────── */
 
   var ICONS = {

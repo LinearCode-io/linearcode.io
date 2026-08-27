@@ -55,7 +55,7 @@ Certbot on the box, and `nginx/` holds reference copies only:
 | `public/index.html` | the gateway — hero, live demo, pillars, hiring |
 | `public/research/` | article index and reader; `posts/*.md` is the only thing you add |
 | `public/md.js` | Markdown renderer, written not vendored; escapes raw HTML |
-| `public/demo.js` | omnibar demo, theme toggle, contact form |
+| `public/demo.js` | omnibar demo, theme toggle |
 | `public/styles.css` | design tokens mirroring Coco Terminal, light/dark/system |
 | `scripts/build-index.py` | regenerates the derived files |
 | `scripts/build-og.sh` | re-renders `public/og-image.png` from `og-card.html` |

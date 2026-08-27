@@ -1117,65 +1117,26 @@ section {
 /* ───────────────────────── contact ───────────────────────── */
 
 .contact {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: start;
-  padding: 26px 28px;
+  padding: 30px 32px;
   border-radius: 22px;
   border: 1px solid var(--glass-border);
   background: var(--hover-bg);
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 10px;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.field label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--fg-secondary);
-}
-
-.field input,
-.field textarea,
-.field select {
-  width: 100%;
-  padding: 10px 13px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--input-fg);
-  font: inherit;
-  font-size: 14px;
-  outline: none;
+.contact-email {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: clamp(20px, 2.6vw, 28px);
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--dashboard-accent-border);
+  padding-bottom: 3px;
   transition: border-color var(--duration-fast) var(--ease-smooth);
 }
 
-.field input:focus,
-.field textarea:focus,
-.field select:focus {
-  border-color: var(--dashboard-accent);
-}
-
-.field textarea {
-  resize: vertical;
-  min-height: 74px;
-}
-
-.form-note {
-  margin: 10px 0 0;
-  font-size: 11.5px;
-  color: var(--fg-dim);
+.contact-email:hover {
+  border-bottom-color: var(--dashboard-accent);
 }
 
 /* ───────────────────────── footer ───────────────────────── */
@@ -1511,17 +1472,9 @@ footer {
 /* ───────────────────────── responsive ───────────────────────── */
 
 @media (max-width: 940px) {
-  .field-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
   .pillars,
   .proof {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .contact {
-    grid-template-columns: 1fr;
-    gap: 24px;
   }
   .stat-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
