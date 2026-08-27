@@ -21,7 +21,9 @@ public/                  everything that gets deployed, as-is
     research.js          picks the view, fetches the post
     posts.json           GENERATED — do not hand-edit
     posts/*.md           the articles; the only thing you add
-scripts/build-index.py   regenerates posts.json from front matter
+  sitemap.xml            GENERATED — do not hand-edit
+  robots.txt             GENERATED — do not hand-edit
+scripts/build-index.py   regenerates posts.json, sitemap.xml, robots.txt
 nginx/linearcode.conf    reference copy of the vhost (not deployed)
 deploy.sh
 ```
@@ -45,7 +47,11 @@ cp ~/article/_posts/2026-06-30-my-post.md public/research/posts/
 
 `deploy.sh` runs `build-index.py` itself, so a copy plus a deploy is enough;
 run it by hand when you want the local preview to see a new post. `--check`
-exits non-zero if `posts.json` is stale, for a pre-commit hook or CI.
+exits non-zero if any generated file is stale, for a pre-commit hook or CI.
+
+The sitemap is not decoration. Articles render client-side, so no article URL
+appears in any static HTML — without `sitemap.xml` a crawler has nothing to
+follow and the research section is invisible.
 
 Filenames follow the Jekyll convention `YYYY-MM-DD-slug.md`; the slug half
 becomes the URL `/research/?p=<slug>`. Front matter drives the index card and

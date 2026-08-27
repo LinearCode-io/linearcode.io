@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Regenerate public/research/posts.json from the Markdown posts.
+"""Regenerate the derived files under public/ from the Markdown posts.
+
+Writes three things, none of which should ever be hand-edited:
+
+    public/research/posts.json   the manifest the site fetches
+    public/sitemap.xml           every page, so articles are discoverable
+    public/robots.txt            points crawlers at the sitemap
+
+The sitemap matters more than it looks. Articles render client-side, so no
+article URL appears in any static HTML — without a sitemap a crawler has
+nothing to follow and the research section is invisible.
 
 Publishing an article is "drop the Jekyll .md into public/research/posts/".
 This script is what makes that true: it reads the front matter of every post
@@ -21,10 +31,15 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
+from xml.sax.saxutils import escape
 
 ROOT = Path(__file__).resolve().parent.parent
 POSTS_DIR = ROOT / "public" / "research" / "posts"
 MANIFEST = ROOT / "public" / "research" / "posts.json"
+SITEMAP = ROOT / "public" / "sitemap.xml"
+ROBOTS = ROOT / "public" / "robots.txt"
+BASE_URL = "https://linearcode.io"
 
 FILENAME = re.compile(r"^(\d{4})-(\d{2})-(\d{2})-(?P<slug>.+)\.(?:md|markdown)$")
 SCALAR = re.compile(r"^([A-Za-z0-9_-]+)\s*:\s*(.*)$")
@@ -107,20 +122,71 @@ def build() -> list:
     return posts
 
 
+def render_sitemap(posts: list) -> str:
+    """Static pages plus one entry per article.
+
+    Article URLs carry a ?p= query string, which crawlers rank below clean
+    paths. That is a consequence of serving every article from one page; if
+    research traffic ever matters commercially, pre-rendering to /research/<slug>/
+    fixes the URL and this function at the same time.
+    """
+    today = max((p["date"] for p in posts), default="")
+    entries = [
+        (f"{BASE_URL}/", today, "weekly"),
+        (f"{BASE_URL}/research/", today, "weekly"),
+    ]
+    entries += [
+        (f"{BASE_URL}/research/?p={quote(p['slug'])}", p["date"], "yearly") for p in posts
+    ]
+
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for loc, lastmod, freq in entries:
+        lines.append("  <url>")
+        lines.append(f"    <loc>{escape(loc)}</loc>")
+        if lastmod:
+            lines.append(f"    <lastmod>{lastmod}</lastmod>")
+        lines.append(f"    <changefreq>{freq}</changefreq>")
+        lines.append("  </url>")
+    lines.append("</urlset>")
+    return "\n".join(lines) + "\n"
+
+
+def render_robots() -> str:
+    return (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"\nSitemap: {BASE_URL}/sitemap.xml\n"
+    )
+
+
 def main() -> int:
     posts = build()
-    payload = json.dumps(posts, indent=2, ensure_ascii=False) + "\n"
+    outputs = {
+        MANIFEST: json.dumps(posts, indent=2, ensure_ascii=False) + "\n",
+        SITEMAP: render_sitemap(posts),
+        ROBOTS: render_robots(),
+    }
 
     if "--check" in sys.argv:
-        current = MANIFEST.read_text(encoding="utf-8") if MANIFEST.exists() else ""
-        if current != payload:
-            print("posts.json is stale — run ./scripts/build-index.py", file=sys.stderr)
+        stale = [
+            path.name
+            for path, want in outputs.items()
+            if (path.read_text(encoding="utf-8") if path.exists() else "") != want
+        ]
+        if stale:
+            print(
+                "stale, run ./scripts/build-index.py: " + ", ".join(stale),
+                file=sys.stderr,
+            )
             return 1
-        print(f"posts.json up to date ({len(posts)} post(s))")
+        print(f"generated files up to date ({len(posts)} post(s))")
         return 0
 
-    MANIFEST.write_text(payload, encoding="utf-8")
-    print(f"posts.json written ({len(posts)} post(s))")
+    for path, content in outputs.items():
+        path.write_text(content, encoding="utf-8")
+
+    print(f"{len(posts)} post(s) — posts.json, sitemap.xml, robots.txt written")
     for post in posts:
         print(f"  {post['dateShort']}  {post['slug']}")
     return 0

@@ -37,8 +37,8 @@ echo -e "${YELLOW}Step 1: regenerating the research index…${NC}"
 echo ""
 
 echo -e "${YELLOW}Step 2: validating local files…${NC}"
-for file in index.html styles.css demo.js md.js logo.svg research/index.html \
-            research/research.js research/posts.json; do
+for file in index.html styles.css demo.js md.js logo.svg sitemap.xml robots.txt \
+            research/index.html research/research.js research/posts.json; do
   if [ ! -f "$PUBLIC_DIR/$file" ]; then
     echo -e "${RED}Error: public/$file not found${NC}"
     exit 1
